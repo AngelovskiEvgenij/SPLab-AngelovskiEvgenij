@@ -1,7 +1,8 @@
 public interface Element {
     void print();
 
-    // Implementari implicite pentru frunze: nu pot avea copii
+    void accept(Visitor visitor);
+
     default void add(Element element) {
         throw new UnsupportedOperationException(getClass().getSimpleName() + " nu poate contine alte elemente");
     }

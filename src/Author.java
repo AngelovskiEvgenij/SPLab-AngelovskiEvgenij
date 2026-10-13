@@ -7,8 +7,6 @@ public class Author {
         this.surname = surname;
     }
 
-    // Constructor pentru main-ul din laborator: new Author("Radu Pavel Gheo")
-    // Ultimul cuvant devine surname, restul name.
     public Author(String fullName) {
         int idx = fullName.lastIndexOf(' ');
         if (idx < 0) {
@@ -21,6 +19,6 @@ public class Author {
     }
 
     public void print() {
-        System.out.println("Author: " + (surname.isEmpty() ? name : name + " " + surname));
+        System.out.println("Autor: " + (surname.isEmpty() ? name : name + " " + surname));
     }
 }

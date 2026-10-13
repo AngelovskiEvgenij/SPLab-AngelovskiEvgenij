@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Book extends Section {
@@ -12,8 +13,17 @@ public class Book extends Section {
         authors.add(author);
     }
 
+    public List<Author> getAuthors() {
+        return Collections.unmodifiableList(authors);
+    }
+
     public void addContent(Element element) {
         add(element);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
@@ -23,6 +33,6 @@ public class Book extends Section {
         for (Author author : authors) {
             author.print();
         }
-        printChildren(); // continutul cartii, fara a repeta titlul
+        printChildren();
     }
 }

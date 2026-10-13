@@ -9,7 +9,7 @@ public class Image implements Element, Picture {
     public Image(String name) {
         url = name;
         try {
-            TimeUnit.SECONDS.sleep(5);
+            TimeUnit.SECONDS.sleep(5); // simuleaza incarcarea unei imagini mari
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -29,6 +29,10 @@ public class Image implements Element, Picture {
     @Override
     public ImageContent content() {
         return content;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
     }
 
     @Override
