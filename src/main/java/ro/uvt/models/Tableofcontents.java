@@ -1,11 +1,16 @@
 package ro.uvt.models;
 
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tableofcontents implements Element {
-    private final String something;
-    private final List<String> entries = new ArrayList<>();
+@Entity
+public class Tableofcontents extends BaseElement {
+    private String something;
+
+    @ElementCollection
+    private List<String> entries = new ArrayList<>();
 
     public Tableofcontents() {
         this("");
@@ -13,6 +18,14 @@ public class Tableofcontents implements Element {
 
     public Tableofcontents(String something) {
         this.something = something;
+    }
+
+    public String getSomething() {
+        return something;
+    }
+
+    public List<String> getEntries() {
+        return entries;
     }
 
     public void addEntry(String title, int level) {
@@ -26,7 +39,7 @@ public class Tableofcontents implements Element {
 
     @Override
     public void print() {
-        System.out.println("Table of Contents" + (something.isEmpty() ? "" : ": " + something));
+        System.out.println("Table of Contents" + (something == null || something.isEmpty() ? "" : ": " + something));
         for (String entry : entries) {
             System.out.println(entry);
         }

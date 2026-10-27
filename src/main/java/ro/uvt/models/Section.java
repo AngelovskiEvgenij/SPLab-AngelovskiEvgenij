@@ -1,12 +1,20 @@
 package ro.uvt.models;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Section implements Element {
-    private final String title;
-    private final List<Element> children = new ArrayList<>();
+@Entity
+public class Section extends BaseElement {
+    private String title;
+
+    @OneToMany(targetEntity = BaseElement.class, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn
+    private List<Element> children = new ArrayList<>();
+
+    protected Section() {
+    }
 
     public Section(String title) {
         this.title = title;
@@ -14,6 +22,10 @@ public class Section implements Element {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<Element> getChildren() {

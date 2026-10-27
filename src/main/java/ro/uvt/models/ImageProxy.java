@@ -1,10 +1,17 @@
 package ro.uvt.models;
 
+import jakarta.persistence.*;
 import java.awt.Dimension;
 
-public class ImageProxy implements Element, Picture {
-    private final String url;
+@Entity
+public class ImageProxy extends BaseElement implements Picture {
+    private String url;
+
+    @Transient
     private Image realImage;
+
+    protected ImageProxy() {
+    }
 
     public ImageProxy(String url) {
         this.url = url;
@@ -15,6 +22,10 @@ public class ImageProxy implements Element, Picture {
             realImage = new Image(url);
         }
         return realImage;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     @Override

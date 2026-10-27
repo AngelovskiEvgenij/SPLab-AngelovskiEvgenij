@@ -1,11 +1,18 @@
 package ro.uvt.models;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Entity
 public class Book extends Section {
-    private final List<Author> authors = new ArrayList<>();
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Author> authors = new ArrayList<>();
+
+    protected Book() {
+    }
 
     public Book(String title) {
         super(title);
@@ -17,6 +24,10 @@ public class Book extends Section {
 
     public List<Author> getAuthors() {
         return Collections.unmodifiableList(authors);
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = new ArrayList<>(authors);
     }
 
     public void addContent(Element element) {

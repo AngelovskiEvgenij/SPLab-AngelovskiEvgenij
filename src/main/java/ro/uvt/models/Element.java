@@ -6,14 +6,14 @@ public interface Element {
     void accept(Visitor visitor);
 
     default void add(Element element) {
-        throw new UnsupportedOperationException(getClass().getSimpleName() + " nu poate contine alte elemente");
+        throw new UnsupportedOperationException(getClass().getSimpleName() + " cannot contain other elements");
     }
 
     default void remove(Element element) {
-        throw new UnsupportedOperationException(getClass().getSimpleName() + " nu poate contine alte elemente");
+        throw new UnsupportedOperationException(getClass().getSimpleName() + " cannot contain other elements");
     }
 
     default Element get(int index) {
-        throw new UnsupportedOperationException(getClass().getSimpleName() + " nu poate contine alte elemente");
+        throw new UnsupportedOperationException(getClass().getSimpleName() + " cannot contain other elements");
     }
 }
