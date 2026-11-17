@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.uvt.models.Book;
+import ro.uvt.observers.AllBooksSubject;
 import ro.uvt.persistence.CrudRepository;
 import ro.uvt.services.*;
 
@@ -13,9 +14,12 @@ import java.util.List;
 @RequestMapping("/books")
 public class BooksController {
     private final CommandContext context;
+    private final AllBooksSubject allBooksSubject;
 
-    public BooksController(CrudRepository<Book, Integer> booksRepository) {
+    public BooksController(CrudRepository<Book, Integer> booksRepository,
+                           AllBooksSubject allBooksSubject) {
         this.context = new CommandContext(booksRepository);
+        this.allBooksSubject = allBooksSubject;
     }
 
     @GetMapping
@@ -31,9 +35,11 @@ public class BooksController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> create(@RequestBody BookRequest request) {
-        Book created = new CreateBookCommand(request).execute(context);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created.getId());
+    public ResponseEntity<String> newBook(@RequestBody BookRequest request) {
+        Book book = new CreateBookCommand(request).execute(context);
+        allBooksSubject.add(book);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Book saved [" + book.getId() + "] " + book.getTitle());
     }
 
     @PutMapping("/{id}")
